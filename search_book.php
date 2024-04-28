@@ -7,13 +7,30 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// User's dashboard or homepage content goes here
+// Initialize variables
+$search_results = array();
+
+// Process user input
+if (isset($_GET['search'])) {
+    $search_term = $_GET['search'];
+
+    // Construct SQL query
+    $sql = "SELECT * FROM Books WHERE title LIKE '%$search_term%'";
+
+    // Execute SQL query
+    $result = $db->query($sql);
+
+    if($result != false){
+        $search_results = $result->fetchAll();
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bookstore</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Search Results</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 
@@ -28,40 +45,16 @@ if (!isset($_SESSION['user_id'])) {
   </nav>
 </header>
 
-<main>
-    <h2> Search Results </h2>
-    <?php
-    // Process user input
-    $servername = "mysql01.cs.virginia.edu";
-    $username = "rg3pzr";
-    $password = "dbpass";
-    $dbname = "jt8ab_b";
+<h2>Search Results</h2>
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+<?php if (!empty($search_results)) : ?>
+    <?php foreach ($search_results as $book) : ?>
+        <p>Book Name: <?php echo $book['title']; ?></p>
+        <!-- Add more fields to display other book information as needed -->
+    <?php endforeach; ?>
+<?php else : ?>
+    <p>No results found</p>
+<?php endif; ?>
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    if (isset($_GET['search'])) {
-        $search_term = $_GET['search'];
-        // Construct SQL query
-        $sql = "SELECT * FROM Books WHERE title LIKE '%$search_term%'";
-
-        // Execute SQL query
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            // Display results
-            while($row = $result->fetch_assoc()) {
-                echo "<p>Book Name: " . $row["title"]. "</p>";
-                // Add more fields to display other book information as needed
-            }
-        } else {
-            echo "<p>No results found</p>";
-        }
-    }
-    ?>
-</main>
 </body>
 </html>
