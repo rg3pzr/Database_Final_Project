@@ -5,26 +5,24 @@ session_start();
 $message = ''; // To store messages that will be displayed to the user
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['ISBN'])) {
-    $userId = $_SESSION['user_id']; // Assuming the user_id is stored in the session after login
+    $userId = $_SESSION['user_id'];
     $isbn = $_POST['ISBN'];
+    $action = isset($_POST['like']) ? 'like' : 'unlike';
 
-    // Check if the user has already liked this book
-    $checkStmt = $db->prepare("SELECT * FROM Has_Read WHERE user_id = ? AND ISBN = ?");
-    $checkStmt->execute([$userId, $isbn]);
-    $alreadyLiked = $checkStmt->fetch();
-
-    if (!$alreadyLiked) {
-        // Insert into liked_books table
+    if ($action == 'like') {
+        // Attempt to like the book
         $insertStmt = $db->prepare("INSERT INTO Has_Read (user_id, ISBN) VALUES (?, ?)");
         $result = $insertStmt->execute([$userId, $isbn]);
+    } elseif ($action == 'unlike') {
+        // Attempt to unlike the book
+        $deleteStmt = $db->prepare("DELETE FROM Has_Read WHERE user_id = ? AND ISBN = ?");
+        $result = $deleteStmt->execute([$userId, $isbn]);
         
         if ($result) {
-            $message = "You liked this book!";
+            $message = "You unliked this book.";
         } else {
-            $message = "Error liking the book.";
+            $message = "Error unliking the book.";
         }
-    } else {
-        $message = "You have already liked this book.";
     }
 }
 
@@ -67,10 +65,16 @@ $books = $stmt->fetchAll();
                             No ratings yet
                         <?php endif; ?>
                     </p>
-                    <?php if (isset($_SESSION['user_id'])): // Check if the user is logged in ?>
+                    <?php if (isset($_SESSION['user_id'])): // Check if the user is logged in
+                        // Check if the book has been liked
+                        $checkStmt = $db->prepare("SELECT * FROM Has_Read WHERE user_id = ? AND ISBN = ?");
+                        $checkStmt->execute([$_SESSION['user_id'], $book['ISBN']]);
+                        $alreadyLiked = $checkStmt->fetch();
+                        $buttonText = $alreadyLiked ? 'Unlike' : 'Like';
+                    ?>
                         <form action="allbooks.php" method="post">
                             <input type="hidden" name="ISBN" value="<?= htmlspecialchars($book['ISBN']) ?>">
-                            <input type="submit" value="I like this book">
+                            <input type="submit" name="<?= strtolower($buttonText) ?>" value="<?= $buttonText ?>">
                         </form>
                     <?php endif; ?>
                 </div>
