@@ -10,16 +10,53 @@ if (!isset($_SESSION['user_id'])) {
 // User's dashboard or homepage content goes here
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome to the Book Recommendation System</title>
+<title>Bookstore</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to Our Book Recommendation System</h1>
-    <p><a href="search_books.php">Search Books</a></p>
-    <p><a href="add_book.php">Add New Book</a></p>
-    <p><a href="update_profile.php">Update Profile</a></p>
-    <p><a href="logout.php">Logout</a></p>
+
+<header>
+  <nav class="top-nav">
+    <ul>
+      <li><a href="/DatabaseProject/index.html">Search</a></li>
+      <li><a href="/DatabaseProject/allbooks.html">All Books</a></li>
+      <li><a href="/DatabaseProject/signin.html">Sign in</a></li>
+      <li><a href="/DatabaseProject/signup.html">Sign up</a></li>
+    </ul>
+  </nav>
+  
+  <div class="search-box">
+    <form action="/search">
+      <input type="text" placeholder="What book would you like to search for?" name="search">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</header>
+
+<main>
+  <h2 class="heading" >Fan Favorites of the Week</h2>
+  <section class="book-shelf">
+    <article class="book">
+      <img src="img/book1.png" alt="Book 1">
+      <p>Book 1</p>
+      <span>⭐⭐⭐⭐⭐</span>
+    </article>
+    
+    <article class="book">
+      <img src="img/book2.png" alt="Book 2">
+      <p>Book 2</p>
+      <span>⭐⭐⭐⭐</span>
+    </article>
+    
+    <article class="book">
+      <img src="img/book3.png" alt="Book 3">
+      <p>Book 3</p>
+      <span>⭐⭐⭐⭐⭐</span>
+    </article>
+  </section>
+</main>
+
 </body>
 </html>
