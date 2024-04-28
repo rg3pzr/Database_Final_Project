@@ -31,8 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
 <head>
     <meta charset="UTF-8">
     <title>Submit Review</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+<nav class="top-nav">
+    <ul>
+      <li><a href="index.php">Home</a></li>
+      <li><a href="allbooks.php">All Books</a></li>
+      <li><a href="profile.php">Profile</a></li>
+      <li><a href="logout.php">Sign Out</a></li>
+    </ul>
+</nav>
     <h1>Submit Review</h1>
     <form action="review.php" method="post">
         <input type="hidden" name="ISBN" value="<?= htmlspecialchars($isbn) ?>">
@@ -50,8 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
             <label for="comments">Comments:</label>
             <textarea name="comments" id="comments" rows="4" required></textarea>
         </div>
+        <br>
         <button type="submit">Submit Review</button>
     </form>
+    <br>
     <a href="book_detail.php?ISBN=<?= htmlspecialchars($isbn) ?>">Back to Book Details</a>
 </body>
 </html>

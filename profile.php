@@ -49,8 +49,17 @@ if (isset($_POST['generate'])) {
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+    <nav class="top-nav">
+        <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="allbooks.php">All Books</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li><a href="logout.php">Sign Out</a></li>
+        </ul>
+    </nav>
     <h1>User Profile: <?= htmlspecialchars($user['username']) ?></h1>
     <h2>Liked Books</h2>
     <?php if (count($likedBooks) > 0): ?>
