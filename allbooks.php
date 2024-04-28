@@ -112,5 +112,6 @@ $books = $stmt->fetchAll();
             <!-- Filter form can go here -->
         </div>
     </div>
+    
 </body>
 </html>

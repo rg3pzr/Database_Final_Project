@@ -35,6 +35,20 @@ if (isset($_GET['ISBN'])) {
         <p>Comment: <?= nl2br(htmlspecialchars($review['comments'])) ?></p>
     <?php endforeach; ?>
 
+
+    <h2>Reviews</h2>
+    <?php foreach ($reviews as $review): ?>
+        <p>Rating: <?= str_repeat('★', (int)$review['rating']) ?></p>
+        <p>Date: <?= htmlspecialchars($review['rating_date']) ?></p>
+        <p>Comment: <?= nl2br(htmlspecialchars($review['comments'])) ?></p>
+    <?php endforeach; ?>
+
+    <!-- Add Review Button -->
+    <form action="review.php" method="GET">
+        <input type="hidden" name="ISBN" value="<?= htmlspecialchars($isbn) ?>">
+        <input type="submit" value="Add Review">
+    </form>
+
     <a href="allbooks.php">Back to Catalog</a>
 </body>
 </html>
