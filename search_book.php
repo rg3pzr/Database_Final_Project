@@ -69,7 +69,7 @@ if (isset($_GET['search'])) {
 
 <?php if (!empty($search_results)) : ?>
     <?php foreach ($search_results as $book) : ?>
-        <h3><?php echo $book['title']; ?></h3>
+        <h3><a href="book_detail.php?ISBN=<?= urlencode($book['ISBN']) ?>"><?= htmlspecialchars($book['title']) ?></a></h3>
         <h4>Genre: <?php echo $book['genre']; ?></h4>
         <h4>Published Date: <?php echo $book['publication_date']; ?></h4>
         <h4>Average Rating: <?php echo $book['avg_rating']; ?> </h4>
@@ -80,7 +80,7 @@ if (isset($_GET['search'])) {
             $alreadyLiked = $checkStmt->fetch();
             $buttonText = $alreadyLiked ? 'Unlike' : 'Like';
         ?>
-            <form action="search_book.php" method="post">
+            <form action="search_book.php?search=<?php echo urlencode($search_term); ?>" method="post">
                 <input type="hidden" name="ISBN" value="<?= htmlspecialchars($book['ISBN']) ?>">
                 <input type="submit" name="<?= strtolower($buttonText) ?>" value="<?= $buttonText ?>">
             </form>
