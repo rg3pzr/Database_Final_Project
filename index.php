@@ -28,8 +28,8 @@ if (!isset($_SESSION['user_id'])) {
   </nav>
   
   <div class="search-box">
-    <form action="/search">
-      <input type="text" placeholder="What book would you like to search for?" name="search">
+    <form method="GET" action="search_book.php">
+      <input type="text" name="search" placeholder="What book would you like to search for?">
       <button type="submit">Search</button>
     </form>
   </div>
