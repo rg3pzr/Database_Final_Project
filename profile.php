@@ -33,7 +33,8 @@ if (isset($_POST['generate'])) {
     // Query for random books from the same genres
     $recStmt = $db->prepare("
         SELECT * FROM Books 
-        WHERE genre IN ($inQuery)
+        WHERE genre IN ($inQuery) AND
+        ISBN NOT IN (SELECT ISBN FROM Has_Read)
         ORDER BY RAND()
         LIMIT 5
     ");
