@@ -30,7 +30,9 @@ if (isset($_GET['ISBN'])) {
     <!-- other book details here -->
     <h2>Reviews</h2>
     <?php foreach ($reviews as $review): ?>
-        <!-- display reviews here -->
+        <p>Rating: <?= str_repeat('★', (int)$review['rating']) ?></p>
+        <p>Date: <?= htmlspecialchars($review['rating_date']) ?></p>
+        <p>Comment: <?= nl2br(htmlspecialchars($review['comments'])) ?></p>
     <?php endforeach; ?>
 
     <a href="allbooks.php">Back to Catalog</a>
