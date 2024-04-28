@@ -52,6 +52,34 @@ $books = $stmt->fetchAll();
     <div class="catalog-container">
         <div class="book-list">
             <h1>Catalog Page</h1>
+
+            <!-- Form for sorting options -->
+            <form method="post" action="">
+                <h2>Sort by:
+                    <label><input type="radio" name="sort_option" value="asc" <?php if(isset($_POST['sort_option']) && $_POST['sort_option'] == 'asc') echo 'checked'; ?>> Ascending</label>
+                    <label><input type="radio" name="sort_option" value="desc" <?php if(isset($_POST['sort_option']) && $_POST['sort_option'] == 'desc') echo 'checked'; ?>> Descending</label>
+                    <label><input type="radio" name="sort_option" value="none" <?php if(!isset($_POST['sort_option']) || $_POST['sort_option'] == 'none') echo 'checked'; ?>> None</label>
+                    <input type="submit" value="Apply">
+                </h2>
+            </form>
+            <?php 
+                function sortBooks($a, $b) {
+                    if ($_POST['sort_option'] == 'asc') {
+                        return strcmp($a['title'], $b['title']);
+                    } elseif ($_POST['sort_option'] == 'desc') {
+                        return strcmp($b['title'], $a['title']);
+                    } else {
+                        return 0; // No sorting
+                    }
+                }
+
+                // Check if sort_option is set and valid
+                if(isset($_POST['sort_option']) && in_array($_POST['sort_option'], ['asc', 'desc'])) {
+                    // Sort the books based on the selected option
+                    usort($books, 'sortBooks');
+                }
+            ?>
+
             <?php foreach ($books as $book): ?>
                 <div class="book-item">
                     <h2><a href="book_detail.php?ISBN=<?= urlencode($book['ISBN']) ?>"><?= htmlspecialchars($book['title']) ?></a></h2>
