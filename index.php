@@ -18,14 +18,14 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
 <header>
-  <nav class="top-nav">
+<nav class="top-nav">
     <ul>
       <li><a href="index.php">Home</a></li>
       <li><a href="allbooks.php">All Books</a></li>
-      <li><a href="signin.php">Sign in</a></li>
-      <li><a href="signup.php">Sign up</a></li>
+      <li><a href="profile.php">Profile</a></li>
+      <li><a href="logout.php">Sign Out</a></li>
     </ul>
-  </nav>
+</nav>
   
   <div class="search-box">
     <form method="GET" action="search_book.php">

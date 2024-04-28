@@ -55,14 +55,14 @@ if (isset($_GET['search'])) {
 <body>
 
 <header>
-  <nav class="top-nav">
+    <nav class="top-nav">
     <ul>
       <li><a href="index.php">Home</a></li>
       <li><a href="allbooks.php">All Books</a></li>
-      <li><a href="signin.php">Sign in</a></li>
-      <li><a href="signup.php">Sign up</a></li>
+      <li><a href="profile.php">Profile</a></li>
+      <li><a href="logout.php">Sign Out</a></li>
     </ul>
-  </nav>
+    </nav>
 </header>
 
 <h1>Search Results</h1>

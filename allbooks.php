@@ -41,9 +41,20 @@ $books = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>Catalog Page</title>
-    <!-- Add your CSS styling here -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+
+<header>
+  <nav class="top-nav">
+    <ul>
+      <li><a href="index.php">Home</a></li>
+      <li><a href="allbooks.php">All Books</a></li>
+      <li><a href="profile.php">Profile</a></li>
+      <li><a href="logout.php">Sign Out</a></li>
+    </ul>
+  </nav>
+</header>
 
     <?php if (!empty($message)): ?>
         <p><?= htmlspecialchars($message) ?></p>
