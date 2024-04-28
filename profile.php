@@ -2,18 +2,19 @@
 include('connect-db.php');
 session_start();
 
+
 if (!isset($_SESSION['user_id'])) {
     // Redirect to login page if the user is not logged in
     header('Location: login.php');
     exit;
 }
-
+ 
 
 $userId = $_SESSION['user_id'];
 $userStmt = $db->prepare("SELECT username FROM Users WHERE user_id = ?");
 $userStmt->execute([$userId]);
 $user = $userStmt->fetch();
-
+ 
 $booksStmt = $db->prepare("
     SELECT b.ISBN, b.title, b.genre, b.publication_date
     FROM Has_Read hr
@@ -43,6 +44,30 @@ if (isset($_POST['generate'])) {
     $recommendations = $recStmt->fetchAll();
 }
 
+if (isset($_POST['export_liked'])) {
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="liked_books.csv"');
+    $output = fopen('php://output', 'w');
+    fputcsv($output, array('ISBN', 'Title', 'Genre', 'Publication Date'));
+    foreach ($likedBooks as $book) {
+        fputcsv($output, $book);
+    }
+    fclose($output);
+    exit;
+}
+
+if (isset($_POST['export_recommended'])) {
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="recommended_books.csv"');
+    $output = fopen('php://output', 'w');
+    fputcsv($output, array('ISBN', 'Title', 'Genre'));
+    foreach ($recommendations as $book) {
+        fputcsv($output, $book);
+    }
+    fclose($output);
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +86,9 @@ if (isset($_POST['generate'])) {
                 </li>
             <?php endforeach; ?>
         </ul>
+        <form method="post">
+            <button type="submit" name="export_liked">Export Liked Books</button>  
+        </form>
     <?php else: ?>
         <p>You have not liked any books yet.</p>
     <?php endif; ?>
@@ -76,6 +104,9 @@ if (isset($_POST['generate'])) {
                 <li><?= htmlspecialchars($book['title']) ?> - <?= htmlspecialchars($book['genre']) ?></li>
             <?php endforeach; ?>
         </ul>
+        <form method="post">
+            <button type="submit" name="export_liked">Export Liked Books</button>
+        </form>
     <?php endif; ?>
 </body>
 </html>
