@@ -38,23 +38,23 @@ if (!isset($_SESSION['user_id'])) {
 <main>
   <h2 class="heading" >Fan Favorites of the Week</h2>
   <section class="book-shelf">
-    <article class="book">
-      <img src="img/book1.png" alt="Book 1">
-      <p>Book 1</p>
-      <span>⭐⭐⭐⭐⭐</span>
-    </article>
-    
-    <article class="book">
-      <img src="img/book2.png" alt="Book 2">
-      <p>Book 2</p>
-      <span>⭐⭐⭐⭐</span>
-    </article>
-    
-    <article class="book">
-      <img src="img/book3.png" alt="Book 3">
-      <p>Book 3</p>
-      <span>⭐⭐⭐⭐⭐</span>
-    </article>
+  <article class="book">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lolita_1955.JPG/440px-Lolita_1955.JPG" alt="Book 1">
+      <p>Book 1</p>
+      <span>⭐⭐⭐⭐⭐</span>
+    </article>
+    
+    <article class="book">
+      <img src="https://upload.wikimedia.org/wikipedia/en/3/39/The_Hunger_Games_cover.jpg" alt="Book 2">
+      <p>Book 2</p>
+      <span>⭐⭐⭐⭐</span>
+    </article>
+    
+    <article class="book">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/The_Prophet_%28Gibran%29.jpg" alt="Book 3">
+      <p>Book 3</p>
+      <span>⭐⭐⭐⭐⭐</span>
+    </article>
   </section>
 </main>
 

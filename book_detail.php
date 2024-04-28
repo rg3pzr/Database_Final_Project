@@ -50,6 +50,7 @@ if (isset($_GET['ISBN'])) {
     </form>
 
     <a href="allbooks.php">Back to Catalog</a>
+    <br>
     <a href="index.php">Back to Home</a>
 </body>
 </html>
