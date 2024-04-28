@@ -20,7 +20,7 @@ if (!isset($_SESSION['user_id'])) {
 <header>
   <nav class="top-nav">
     <ul>
-      <li><a href="index.php">Search</a></li>
+      <li><a href="index.php">Home</a></li>
       <li><a href="allbooks.php">All Books</a></li>
       <li><a href="signin.php">Sign in</a></li>
       <li><a href="signup.php">Sign up</a></li>
