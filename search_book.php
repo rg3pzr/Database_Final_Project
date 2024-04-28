@@ -35,10 +35,7 @@ if (isset($_GET['search'])) {
     $search_term = $_GET['search'];
 
     // Construct SQL query
-    $sql = "SELECT b.ISBN, b.title, b.genre, b.publication_date, AVG(r.rating) as average_rating, COUNT(r.rating) as rating_count FROM Books b 
-    WHERE title LIKE '%$search_term%
-    LEFT JOIN Ratings r ON b.ISBN = r.ISBN
-    GROUP BY b.ISBN'";
+    $sql = "SELECT * FROM Books b WHERE title LIKE '%$search_term%'";
 
     // Execute SQL query
     $result = $db->query($sql);
@@ -75,14 +72,7 @@ if (isset($_GET['search'])) {
         <h3><?php echo $book['title']; ?></h3>
         <h4>Genre: <?php echo $book['genre']; ?></h4>
         <h4>Published Date: <?php echo $book['publication_date']; ?></h4>
-        <h4>Average Rating: 
-            <?php if ($book['rating_count'] > 0): ?>
-            <?= str_repeat('★', round($book['average_rating'])) ?>
-            (<?= $book['rating_count'] ?> Ratings)
-        <?php else: ?>
-            No ratings yet
-        <?php endif; ?>
-        </h4>
+        <h4>Average Rating: <?php echo $book['avg_rating']; ?> </h4>
         <?php if (isset($_SESSION['user_id'])): // Check if the user is logged in
             // Check if the book has been liked
             $checkStmt = $db->prepare("SELECT * FROM Has_Read WHERE user_id = ? AND ISBN = ?");
@@ -90,7 +80,7 @@ if (isset($_GET['search'])) {
             $alreadyLiked = $checkStmt->fetch();
             $buttonText = $alreadyLiked ? 'Unlike' : 'Like';
         ?>
-            <form action="allbooks.php" method="post">
+            <form action="search_book.php" method="post">
                 <input type="hidden" name="ISBN" value="<?= htmlspecialchars($book['ISBN']) ?>">
                 <input type="submit" name="<?= strtolower($buttonText) ?>" value="<?= $buttonText ?>">
             </form>
