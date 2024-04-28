@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .heading{
+      text-align: center; 
+  }
+  
+  .top-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    text-align: center;
+  }
+  
+  .top-nav li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .top-nav li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .search-box {
+    margin: 20px auto;
+    width: 50%;
+  }
+  
+  .search-box input[type=text] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+    border: 1px solid #ccc;
+  }
+  
+  .search-box button {
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+  }
+  
+  .book-shelf {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .book {
+    margin: 0 15px;
+    text-align: center;
+  }
+  
+  .book img {
+    width: 100px; /* Adjust as needed */
+    height: 150px; /* Adjust as needed */
+    background-color: #ddd; /* Placeholder color */
+  }
+  
+  .book p {
+    margin: 5px 0;
+  }
+  
+  .book span {
+    color: #ff0;
+    font-size: 20px;
+  }
+  

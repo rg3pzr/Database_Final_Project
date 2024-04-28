@@ -20,10 +20,10 @@ if (!isset($_SESSION['user_id'])) {
 <header>
   <nav class="top-nav">
     <ul>
-      <li><a href="/DatabaseProject/index.html">Search</a></li>
-      <li><a href="/DatabaseProject/allbooks.html">All Books</a></li>
-      <li><a href="/DatabaseProject/signin.html">Sign in</a></li>
-      <li><a href="/DatabaseProject/signup.html">Sign up</a></li>
+      <li><a href="/Database_Final_Project/index.html">Search</a></li>
+      <li><a href="/Database_Final_Project/allbooks.html">All Books</a></li>
+      <li><a href="/Database_Final_Project/signin.html">Sign in</a></li>
+      <li><a href="/Database_Final_Project/signup.html">Sign up</a></li>
     </ul>
   </nav>
   
