@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+
 $userId = $_SESSION['user_id'];
 $userStmt = $db->prepare("SELECT username FROM Users WHERE user_id = ?");
 $userStmt->execute([$userId]);
