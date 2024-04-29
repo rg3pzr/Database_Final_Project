@@ -98,45 +98,64 @@ if (isset($_POST['import']) && isset($_FILES['file'])) {
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="profile.css">
 </head>
 <body>
+    <nav class="top-nav">
+        <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="allbooks.php">All Books</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li><a href="logout.php">Sign Out</a></li>
+        </ul>
+    </nav>
     <h1>User Profile: <?= htmlspecialchars($user['username']) ?></h1>
-    <h2>Liked Books</h2>
+    <h3 style="font-family:georgia">Your Liked Books</h3>
     <?php if (count($likedBooks) > 0): ?>
         <ul>
             <?php foreach ($likedBooks as $book): ?>
-                <li>
-                    <strong><?= htmlspecialchars($book['title']) ?></strong> (<?= htmlspecialchars($book['genre']) ?>) - Published: <?= htmlspecialchars($book['publication_date']) ?>
-                </li>
+                <div class="card mb-2 bg-light rounded" style="border-radius:15px">
+                    <div class="card-body">
+                        <strong><?= htmlspecialchars($book['title']) ?></strong> (<?= htmlspecialchars($book['genre']) ?>) - Published: <?= htmlspecialchars($book['publication_date']) ?>
+                    </div>
+                </div>
             <?php endforeach; ?>
         </ul>
         <form method="post">
-            <button type="submit" name="export_liked">Export Liked Books</button>  
+            <button type="submit" class="btn btn-primary" name="export_liked" style="border-radius: 10px">Export Liked Books</button>   
         </form>
     <?php else: ?>
         <p>You have not liked any books yet.</p>
     <?php endif; ?>
 
+    <br></br>
     <form method="post">
-        <button type="submit" name="generate">Generate Recommendation List</button>
+        <button type="submit" name="generate" class="btn btn-primary" style="border-radius: 10px">Generate Recommendation List</button>
     </form>
 
     <?php if (count($recommendations) > 0): ?>
-        <h2>Recommended Books</h2>
+        <h3 style="font-family:georgia">Recommended Books:</h3>
         <ul>
             <?php foreach ($recommendations as $book): ?>
-                <li><?= htmlspecialchars($book['title']) ?> - <?= htmlspecialchars($book['genre']) ?></li>
+                <div class="card mb-2 bg-light rounded" style="border-radius:15px">
+                    <div class="card-body">
+                        <strong><?= htmlspecialchars($book['title']) ?> - <?= htmlspecialchars($book['genre'])?><strong>
+                        <a href="book_detail.php?ISBN=<?= htmlspecialchars($book['ISBN']) ?>" class="btn btn-outline-primary">Check out this book</a>
+                    </div>
+                </div>
             <?php endforeach; ?>
         </ul>
         <form method="post">
-            <button type="submit" name="export_liked">Export Liked Books</button>
+            <button type="submit" name="export_liked" style="border-radius: 10px">Export Liked Books</button>
         </form>
     <?php endif; ?>
 
     <form action="profile.php" method="post" enctype="multipart/form-data">
         <label>Upload CSV of Books to Like:</label>
-        <input type="file" name="file" required>
-        <button type="submit" name="import">Import Liked Books</button>
+        <input style="border-radius: 10px" type="file" name="file" required>
+        <label>Import books you like:</label>
+        <button type="submit" name="import" style="border-radius: 10px">Import Liked Books</button>
     </form>
 
 </body>

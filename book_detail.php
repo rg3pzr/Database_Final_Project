@@ -6,7 +6,11 @@ $bookImages = [
     "murder-on-the-orient-express" => "https://upload.wikimedia.org/wikipedia/en/c/c0/Murder_on_the_Orient_Express_First_Edition_Cover_1934.jpg", 
     "how-the-grinch-stole-christmas!" => "https://upload.wikimedia.org/wikipedia/en/8/87/How_the_Grinch_Stole_Christmas_cover.png",
     "the-hunger-games" => "https://upload.wikimedia.org/wikipedia/en/3/39/The_Hunger_Games_cover.jpg", 
-    "angela's-ashes" => "https://upload.wikimedia.org/wikipedia/en/0/0c/AngelasAshes.jpg"
+    "angela's-ashes" => "https://upload.wikimedia.org/wikipedia/en/0/0c/AngelasAshes.jpg",
+    "insurgent" => "https://upload.wikimedia.org/wikipedia/en/9/9c/Insurgent_%28book%29.jpeg",
+    "the-giving-tree" => "https://upload.wikimedia.org/wikipedia/en/7/79/The_Giving_Tree.jpg",
+    "a-light-in-the-attic" => "https://upload.wikimedia.org/wikipedia/en/1/1b/A_Light_in_the_Attic_cover.jpg",
+    "neverwhere" => "https://upload.wikimedia.org/wikipedia/en/1/13/Neverwhere.jpg"
     // Add more entries as needed
 ];
 // Check if the 'ISBN' GET parameter is set
@@ -44,7 +48,7 @@ if (isset($_GET['ISBN'])) {
     </ul>
 </nav>
     <?php $normalizedTitle = strtolower(str_replace(' ', '-', $book['title'])); ?>
-    <?php $imageUrl = ($bookImages[$normalizedTitle]) ?>
+    <?php error_reporting(E_ERROR | E_PARSE); $imageUrl = ($bookImages[$normalizedTitle]); ?>
     <h1><?= htmlspecialchars($book['title']) ?></h1>
     <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="book-image">
     <!-- other book details here -->
