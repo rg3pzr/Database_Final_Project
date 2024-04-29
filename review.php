@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
         <div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Comments:</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="border-radius: 15px;"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="comments" rows="3" style="border-radius: 15px;"></textarea>
             </div>
         </div>
         <br>

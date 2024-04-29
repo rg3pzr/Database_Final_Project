@@ -96,6 +96,15 @@ if (isset($_POST['import']) && isset($_FILES['file'])) {
         if ($handle !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $isbn = $data[0];
+                $bookCheckStmt = $db->prepare("SELECT * FROM Books WHERE ISBN = ?");
+                $bookCheckStmt->execute([$isbn]);
+                $bookExists = $bookCheckStmt->fetch();
+
+                if (!$bookExists) {
+                    echo "<p>Invalid ISBN provided: $isbn</p>";
+                    continue; // Skip to the next iteration
+                }
+                
                 $checkStmt = $db->prepare("SELECT * FROM Has_Read WHERE user_id = ? AND ISBN = ?");
                 $checkStmt->execute([$userId, $isbn]);
                 if ($checkStmt->fetch() === false) {
