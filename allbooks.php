@@ -102,7 +102,7 @@ $books = $stmt->fetchAll();
 
             <?php foreach ($books as $book): ?>
                 <?php $normalizedTitle = strtolower(str_replace(' ', '-', $book['title'])); ?>
-                <?php $imageUrl = ($bookImages[$normalizedTitle]) ?>
+                <?php error_reporting(E_ERROR | E_PARSE); $imageUrl = ($bookImages[$normalizedTitle]); ?>
                 <div class="book-item">
                     <div class="book-info">
                         <h2><a href="book_detail.php?ISBN=<?= urlencode($book['ISBN']) ?>"><?= htmlspecialchars($book['title']) ?></a></h2>
