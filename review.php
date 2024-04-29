@@ -2,6 +2,8 @@
 include('connect-db.php');
 session_start();
 
+error_reporting(E_ERROR | E_PARSE);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['ISBN'])) {
     $userId = $_SESSION['user_id'];
     $isbn = $_POST['ISBN'];
@@ -9,15 +11,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
     $comments = $_POST['comments'];
     $ratingDate = date('Y-m-d');  // Current date in YYYY-MM-DD format
 
-    // Insert the new review into the Ratings table with the rating date
-    $stmt = $db->prepare("INSERT INTO Ratings (user_id, ISBN, rating, comments, rating_date) VALUES (?, ?, ?, ?, ?)");
-    $result = $stmt->execute([$userId, $isbn, $rating, $comments, $ratingDate]);
+    $checkStmt = $db->prepare("SELECT COUNT(*) FROM Ratings WHERE user_id = ? AND ISBN = ?");
+    $checkStmt->execute([$userId, $isbn]);
+    $reviewExists = $checkStmt->fetchColumn() > 0;
+
+    if ($reviewExists) {
+        $errorMessage = "You have already reviewed this book. Duplicate reviews are not allowed.";
+    }
+    else 
+    {
+        $stmt = $db->prepare("INSERT INTO Ratings (user_id, ISBN, rating, comments, rating_date) VALUES (?, ?, ?, ?, ?)");
+        $result = $stmt->execute([$userId, $isbn, $rating, $comments, $ratingDate]);
+
+    }
     
     if ($result) {
         echo "Review submitted successfully!";
         // Optionally redirect or perform other action
     } else {
-        echo "Error submitting the review.";
+        $errorMessage = "You have already reviewed this book. Duplicate reviews are not allowed.";
     }
 } elseif (!isset($_GET['ISBN']) && !isset($_POST['ISBN'])) {
     die("No ISBN specified.");
@@ -44,6 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
     </ul>
 </nav>
     <h1 class="review-title">Submit Review</h1>
+    <?php if (!empty($errorMessage)): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= htmlspecialchars($errorMessage) ?>
+        </div>
+    <?php endif; ?>
     <form action="review.php" method="post">
         <input type="hidden" name="ISBN" value="<?= htmlspecialchars($isbn) ?>">
         <div>
