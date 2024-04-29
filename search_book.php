@@ -35,7 +35,11 @@ if (isset($_GET['search'])) {
     $search_term = $_GET['search'];
 
     // Construct SQL query
-    $sql = "SELECT * FROM Books b WHERE title LIKE '%$search_term%'";
+    $sql = "SELECT b.ISBN, b.title, b.genre, b.publication_date, AVG(r.rating) as average_rating, COUNT(r.rating) as rating_count
+    FROM Books b
+    LEFT JOIN Ratings r ON b.ISBN = r.ISBN
+    WHERE b.title LIKE '%$search_term%'
+    GROUP BY b.ISBN";
 
     // Execute SQL query
     $result = $db->query($sql);
@@ -66,13 +70,44 @@ if (isset($_GET['search'])) {
 </header>
 
 <h1>Search Results</h1>
+<form method="post" action="">
+<h2>Sort by:
+    <label><input type="radio" name="sort_option" value="asc" <?php if(isset($_POST['sort_option']) && $_POST['sort_option'] == 'asc') echo 'checked'; ?>> Ascending</label>
+    <label><input type="radio" name="sort_option" value="desc" <?php if(isset($_POST['sort_option']) && $_POST['sort_option'] == 'desc') echo 'checked'; ?>> Descending</label>
+    <label><input type="radio" name="sort_option" value="none" <?php if(!isset($_POST['sort_option']) || $_POST['sort_option'] == 'none') echo 'checked'; ?>> None</label>
+    <input type="submit" value="Apply">
+</h2>
+</form>
+<?php 
+function sortBooks($a, $b) {
+    if ($_POST['sort_option'] == 'asc') {
+        return strcmp($a['title'], $b['title']);
+    } elseif ($_POST['sort_option'] == 'desc') {
+        return strcmp($b['title'], $a['title']);
+    } else {
+        return 0; // No sorting
+    }
+}
 
+// Check if sort_option is set and valid
+if(isset($_POST['sort_option']) && in_array($_POST['sort_option'], ['asc', 'desc'])) {
+    // Sort the books based on the selected option
+    usort($search_results, 'sortBooks');
+}
+?>
 <?php if (!empty($search_results)) : ?>
     <?php foreach ($search_results as $book) : ?>
         <h3><a href="book_detail.php?ISBN=<?= urlencode($book['ISBN']) ?>"><?= htmlspecialchars($book['title']) ?></a></h3>
         <h4>Genre: <?php echo $book['genre']; ?></h4>
         <h4>Published Date: <?php echo $book['publication_date']; ?></h4>
-        <h4>Average Rating: <?php echo $book['avg_rating']; ?> </h4>
+        <h4>Average Rating: 
+            <?php if ($book['rating_count'] > 0): ?>
+            <?= str_repeat('★', round($book['average_rating'])) ?>
+            (<?= $book['rating_count'] ?> Ratings)
+            <?php else: ?>
+                No ratings yet
+            <?php endif; ?>
+        </h4>
         <?php if (isset($_SESSION['user_id'])): // Check if the user is logged in
             // Check if the book has been liked
             $checkStmt = $db->prepare("SELECT * FROM Has_Read WHERE user_id = ? AND ISBN = ?");
