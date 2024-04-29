@@ -50,8 +50,8 @@ if (isset($_GET['ISBN'])) {
     <!-- other book details here -->
     <h2 >Reviews</h2>
         <?php foreach ($reviews as $review): ?>
-            <p>Rating: <?= str_repeat('★', (int)$review['rating']) ?></p>
-            <div class="book-info">
+            <div class="review-info">
+                <p>Rating: <?= str_repeat('★', (int)$review['rating']) ?></p>
                 <p>Date: <?= htmlspecialchars($review['rating_date']) ?></p>
                 <p>Comment: <?= nl2br(htmlspecialchars($review['comments'])) ?></p>
                 <p>Reviewer: <?= htmlspecialchars($review['username']) ?></p> <!-- Displaying the username of the reviewer -->
@@ -66,7 +66,7 @@ if (isset($_GET['ISBN'])) {
         <input type="submit" value="Add Review">
     </form>
     <br>
-    <button onclick="window.location.href='allbooks.php'">Back to Catalog</button>
+    <button class="catalog-button" onclick="window.location.href='allbooks.php'">Back to Catalog</button>
     <br>
 </body>
 </html>

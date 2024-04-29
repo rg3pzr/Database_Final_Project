@@ -28,16 +28,28 @@ body {
     text-decoration: none;
   }
 
-  .total-book-info{
-      display:flex;
+  .review-info {
+    border: 5px solid #ccc;
+    border-radius: 25px; 
+    padding: 10px; 
+    width: 50%; 
   }
 
-  .book-info {
-    display:flex; 
-    flex-direction: column;
+  .catalog-button {
+    background-color: #04AA6D; /* Green */
+    border-radius: 25px;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
   }
 
-  .image-book-info {
-      display:flex; 
-      flex-direction:column; 
+  input {
+      background-color: grey;
+      color:white; 
+      border-radius: 25px;
+      padding: 10px;
   }
