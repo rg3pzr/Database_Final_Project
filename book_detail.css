@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .heading{
+      text-align: center; 
+  }
+  
+  .top-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    text-align: center;
+  }
+  
+  .top-nav li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .top-nav li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .review-info {
+    border: 5px solid #ccc;
+    border-radius: 25px; 
+    padding: 10px; 
+    width: 50%; 
+  }
+
+  .catalog-button {
+    background-color: #04AA6D; /* Green */
+    border-radius: 25px;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  input {
+      background-color: grey;
+      color:white; 
+      border-radius: 25px;
+      padding: 10px;
+  }
