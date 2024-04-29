@@ -22,7 +22,7 @@ $booksStmt = $db->prepare("
     WHERE hr.user_id = ?
 ");
 $booksStmt->execute([$userId]);
-$likedBooks = $booksStmt->fetchAll();
+$likedBooks = $booksStmt->fetchAll(PDO::FETCH_ASSOC);
 
 $recommendations = [];
 if (isset($_POST['generate'])) {
@@ -50,6 +50,7 @@ if (isset($_POST['export_liked'])) {
     header('Content-Disposition: attachment; filename="liked_books.csv"');
     $output = fopen('php://output', 'w');
     fputcsv($output, array('ISBN', 'Title', 'Genre', 'Publication Date'));
+
     foreach ($likedBooks as $book) {
         fputcsv($output, $book);
     }
@@ -147,7 +148,7 @@ if (isset($_POST['import']) && isset($_FILES['file'])) {
             <?php endforeach; ?>
         </ul>
         <form method="post">
-            <button type="submit" name="export_liked" style="border-radius: 10px">Export Liked Books</button>
+            <button type="submit" name="export_recommended" style="border-radius: 10px">Export Recommended Books</button>
         </form>
     <?php endif; ?>
 
