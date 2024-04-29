@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
 <head>
     <meta charset="UTF-8">
     <title>Submit Review</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
       <li><a href="logout.php">Sign Out</a></li>
     </ul>
 </nav>
-    <h1>Submit Review</h1>
+    <h1 class="review-title">Submit Review</h1>
     <form action="review.php" method="post">
         <input type="hidden" name="ISBN" value="<?= htmlspecialchars($isbn) ?>">
         <div>
@@ -56,13 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'], $_POST['
             </select>
         </div>
         <div>
-            <label for="comments">Comments:</label>
-            <textarea name="comments" id="comments" rows="4" required></textarea>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Comments:</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="border-radius: 15px;"></textarea>
+            </div>
         </div>
         <br>
-        <button type="submit">Submit Review</button>
+        <button class="btn btn-primary" type="submit">Submit Review</button>
     </form>
     <br>
-    <a href="book_detail.php?ISBN=<?= htmlspecialchars($isbn) ?>">Back to Book Details</a>
+    <a href="book_detail.php?ISBN=<?= htmlspecialchars($isbn) ?>" class="btn btn-outline-primary">Back to Book Details</a>
 </body>
 </html>
