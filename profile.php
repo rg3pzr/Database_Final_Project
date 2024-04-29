@@ -36,11 +36,12 @@ if (isset($_POST['generate'])) {
     $recStmt = $db->prepare("
         SELECT * FROM Books 
         WHERE genre IN ($inQuery) AND
-        ISBN NOT IN (SELECT ISBN FROM Has_Read)
+        ISBN NOT IN (SELECT ISBN FROM Has_Read WHERE user_id = ?)
         ORDER BY RAND()
         LIMIT 5
     ");
-    $recStmt->execute($genres);
+    
+    $recStmt->execute(array_merge($genres, [$userId]));
     $recommendations = $recStmt->fetchAll();
 }
 
@@ -137,6 +138,6 @@ if (isset($_POST['import']) && isset($_FILES['file'])) {
         <input type="file" name="file" required>
         <button type="submit" name="import">Import Liked Books</button>
     </form>
-    
+
 </body>
 </html>
