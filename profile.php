@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
- 
+
 
 $userId = $_SESSION['user_id'];
 $userStmt = $db->prepare("SELECT username FROM Users WHERE user_id = ?");
@@ -34,7 +34,7 @@ if (isset($_POST['generate'])) {
 
     // Query for random books from the same genres
     $recStmt = $db->prepare("
-        SELECT * FROM Books 
+        SELECT ISBN, title, genre FROM Books 
         WHERE genre IN ($inQuery) AND
         ISBN NOT IN (SELECT ISBN FROM Has_Read WHERE user_id = ?)
         ORDER BY RAND()
@@ -42,7 +42,7 @@ if (isset($_POST['generate'])) {
     ");
     
     $recStmt->execute(array_merge($genres, [$userId]));
-    $recommendations = $recStmt->fetchAll();
+    $recommendations = $recStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if (isset($_POST['export_liked'])) {
@@ -59,6 +59,24 @@ if (isset($_POST['export_liked'])) {
 }
 
 if (isset($_POST['export_recommended'])) {
+    // Find genres of liked books
+    $genres = array_unique(array_column($likedBooks, 'genre'));
+
+    // Create a string of genre placeholders separated by commas for the SQL IN() clause
+    $inQuery = implode(',', array_fill(0, count($genres), '?'));
+
+    // Query for random books from the same genres
+    $recStmt = $db->prepare("
+        SELECT ISBN, title, genre FROM Books 
+        WHERE genre IN ($inQuery) AND
+        ISBN NOT IN (SELECT ISBN FROM Has_Read WHERE user_id = ?)
+        ORDER BY RAND()
+        LIMIT 5
+    ");
+    
+    $recStmt->execute(array_merge($genres, [$userId]));
+    $recommendations = $recStmt->fetchAll(PDO::FETCH_ASSOC);
+
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="recommended_books.csv"');
     $output = fopen('php://output', 'w');
@@ -68,7 +86,7 @@ if (isset($_POST['export_recommended'])) {
     }
     fclose($output);
     exit;
-}
+} 
 
 // Import CSV functionality
 if (isset($_POST['import']) && isset($_FILES['file'])) {
